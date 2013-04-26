@@ -6,6 +6,7 @@
 	Description: Awesome animated stat bars that animate as the user scrolls. Use them to show stats or other information.
 	Class Name: PageLinesStarBars
 	Cloning: true
+	Version: 1.0
 	Workswith: main, templates, sidebar_wrap
 	Filter: post-format
 */
