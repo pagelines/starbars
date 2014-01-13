@@ -6,8 +6,7 @@
 	Description: Awesome animated stat bars that animate as the user scrolls. Use them to show stats or other information.
 	Class Name: PageLinesStarBars
 	Cloning: true
-	Version: 1.0
-	Workswith: main, templates, sidebar_wrap
+	Edition: pro
 	Filter: post-format
 */
 
@@ -16,14 +15,9 @@ class PageLinesStarBars extends PageLinesSection {
 	var $default_limit = 3;
 
 	function section_styles(){
-		wp_enqueue_script( 'pagelines-viewport', $this->base_url.'/script.viewport.js', array( 'jquery' ), PL_CORE_VERSION, true );
-		wp_enqueue_script( 'pagelines-easing', $this->base_url.'/script.easing.js', array( 'jquery'), PL_CORE_VERSION, true );
+
 		wp_enqueue_script( 'starbar', $this->base_url.'/starbar.js', array( 'pagelines-viewport', 'pagelines-easing' ), PL_CORE_VERSION, true );
 
-	}
-
-	function opt($option) {
-		return ploption( $option, $this->oset );
 	}
 
 	function section_opts(){
@@ -32,7 +26,7 @@ class PageLinesStarBars extends PageLinesSection {
 
 		$options[] = array(
 
-			'title' => __( 'StarBar Configuration', 'starbars' ),
+			'title' => __( 'StarBar Configuration', 'pagelines' ),
 			'type'	=> 'multi',
 			'opts'	=> array(
 				array(
@@ -41,22 +35,22 @@ class PageLinesStarBars extends PageLinesSection {
 					'count_start'	=> 1,
 					'count_number'	=> 12,
 					'default'		=> 4,
-					'label' 	=> __( 'Number of StarBars to Configure', 'starbars' ),
+					'label' 	=> __( 'Number of StarBars to Configure', 'pagelines' ),
 				),
 				array(
 					'key'			=> 'starbar_total',
 					'type' 			=> 'text',
 					'default'		=> 100,
-					'label' 		=> __( 'Starbar Total Count (Number)', 'starbars' ),
-					'help' 			=> __( 'This number will be used to calculate the percent of the bar filled. The StarBar values will be shown as a percentage of this value. Default is 100.', 'starbars' ),
+					'label' 		=> __( 'Starbar Total Count (Number)', 'pagelines' ),
+					'help' 			=> __( 'This number will be used to calculate the percent of the bar filled. The StarBar values will be shown as a percentage of this value. Default is 100.', 'pagelines' ),
 				),
 
 				array(
 					'key'			=> 'starbar_modifier',
 					'type' 			=> 'text',
 					'default'		=> '%',
-					'label' 		=> __( 'Starbar Modifier (Text Added to Stats)', 'starbars' ),
-					'help' 			=> __( 'This will be added to the stat number.', 'starbars' ),
+					'label' 		=> __( 'Starbar Modifier (Text Added to Stats)', 'pagelines' ),
+					'help' 			=> __( 'This will be added to the stat number.', 'pagelines' ),
 				),
 				array(
 					'key'			=> 'starbar_format',
@@ -66,13 +60,13 @@ class PageLinesStarBars extends PageLinesSection {
 						'prepend'	 	=> array( 'name' => 'Prepend Modifier' ),
 					),
 					'default'		=> 'append',
-					'label' 	=> __( 'Starbar Format', 'starbars' ),
+					'label' 	=> __( 'Starbar Format', 'pagelines' ),
 				),
 				array(
 					'key'			=> 'starbar_container_title',
 					'type' 			=> 'text',
 					'default'		=> 'StarBar',
-					'label' 	=> __( 'StarBar Title (Optional)', 'starbars' ),
+					'label' 	=> __( 'StarBar Title (Optional)', 'pagelines' ),
 				),
 			)
 
@@ -83,21 +77,22 @@ class PageLinesStarBars extends PageLinesSection {
 		for($i = 1; $i <= $slides; $i++){
 
 			$opts = array(
-
+				
 				'starbar_descriptor_'.$i 	=> array(
-					'label'		=> __( 'Descriptor', 'starbars' ),
+					'label'		=> __( 'Descriptor', 'pagelines' ),
 					'type'		=> 'text'
 				),
 				'starbar_value_'.$i 	=> array(
-					'label'	=> __( 'Value', 'starbars' ),
+					'label'	=> __( 'Value', 'pagelines' ),
 					'type'	=> 'text',
-					'help'	=> __( 'Shown as a percentage of the StarBar total in the config.', 'starbars' ),
+					'help'	=> __( 'Shown as a percentage of the StarBar total in the config.', 'pagelines' ),
 				),
 			);
 
 
 			$options[] = array(
-				'title' 	=> __( '<i class="icon-star"></i> StarBar #', 'starbars' ) . $i,
+				'col'		=> 2,
+				'title' 	=> __( '<i class="icon-star"></i> StarBar #', 'pagelines' ) . $i,
 				'type' 		=> 'multi',
 				'opts' 		=> $opts,
 
@@ -116,24 +111,24 @@ class PageLinesStarBars extends PageLinesSection {
 		$starbar_count = $this->opt('starbar_count');
 		$starbar_format = $this->opt('starbar_format');
 
-		$starbar_title = ($starbar_title) ? sprintf('<h2>%s</h2>', $starbar_title) : '';
+		$starbar_title = ($starbar_title) ? sprintf('<h3>%s</h3>', $starbar_title) : '';
 
 		$format = ($starbar_format) ? $starbar_format : 'append';
 
 		$mod = ($starbar_mod) ? $starbar_mod : '%';
-
+		
 		$total = ($starbar_total) ? $starbar_total : 100;
-
+		
 		$total = apply_filters('starbars_total', $total);
-
+		
 		$output = '';
 		for($i = 1; $i <= $starbar_count; $i++){
 
 			$descriptor = $this->opt('starbar_descriptor_'.$i);
 			$value = (int) $this->opt('starbar_value_'.$i);
-
-			$value = apply_filters('starbar_value', $value, $i, $descriptor, $this);
-
+			
+			$value = apply_filters('starbar_value', $value, $i, $descriptor, $this); 
+			
 
 			$desc = ($descriptor) ? sprintf('<p>%s</p>', $descriptor) : '';
 
@@ -179,7 +174,7 @@ class PageLinesStarBars extends PageLinesSection {
 		<div class="starbars-wrap">
 			<h2>StarBar</h2>
 			<ul class="starbars">
-
+				
 				<li>
 					<p>Ninja Ability</p>
 					<div class="bar-wrap">
@@ -218,12 +213,12 @@ class PageLinesStarBars extends PageLinesSection {
 						'starbar_total'	=> array(
 							'type' 			=> 'text',
 							'default'		=> 100,
-							'inputlabel' 		=> __( 'Starbar Total Count (Number)', 'starbars' )
+							'inputlabel' 		=> __( 'Starbar Total Count (Number)', 'starbar' )
 						),
 						'starbar_modifier'	=> array(
 							'type' 			=> 'text',
 							'default'		=> '%',
-							'inputlabel' 		=> __( 'Starbar Modifier (Text Added to Stats)', 'starbars' )
+							'inputlabel' 		=> __( 'Starbar Modifier (Text Added to Stats)', 'starbar' )
 						),
 						'starbar_format'	=> array(
 							'type' 			=> 'select',
@@ -232,12 +227,12 @@ class PageLinesStarBars extends PageLinesSection {
 								'prepend'	 	=> array( 'name' => 'Prepend Modifier' ),
 							),
 						'default'		=> 'append',
-						'inputlabel' 	=> __( 'Starbar Format', 'starbars' ),
+						'inputlabel' 	=> __( 'Starbar Format', 'pagelines' ),
 						),
 						'starbar_container_title'	=> array(
 							'type' 			=> 'text',
 							'default'		=> 'StarBar',
-							'inputlabel' 	=> __( 'StarBar Title (Optional)', 'starbars' ),
+							'inputlabel' 	=> __( 'StarBar Title (Optional)', 'starbar' ),
 						)
 					)
 				)
@@ -247,31 +242,31 @@ class PageLinesStarBars extends PageLinesSection {
 
 		$oset = array('post_id' => $post_ID, 'clone_id' => $settings['clone_id'], 'type' => $settings['type']);
 
-		$slides = (ploption( 'starbar_count' , $oset )) ? ploption( 'starbar_count' , $oset ) : $this->default_limit;
+		$slides = (pl_setting( 'starbar_count' , $oset )) ? pl_setting( 'starbar_count' , $oset ) : $this->default_limit;
 
 		$opts = array();
 
 		for($i = 1; $i <= $slides; $i++){
 
 			$opts[ 'starbar_descriptor_' . $i ]	= array(
-					'inputlabel'		=> sprintf( __( 'Starbar #%s Description', 'starbars' ), $i ),
+					'inputlabel'		=> sprintf( __( 'Starbar #%s Description', 'starbar' ), $i ),
 					'type'		=> 'text'
 			);
 			$opts['starbar_value_' . $i ] = array(
-					'inputlabel'	=> sprintf( __( 'Starbar #%s Value', 'starbars' ), $i ),
+					'inputlabel'	=> sprintf( __( 'Starbar #%s Value', 'starbar' ), $i ),
 					'type'	=> 'text',
 
 			);
 		}
 			$array['starbars_data'] = array(
-				'title' 	=> __( 'StarBar Values', 'starbars' ),
+				'title' 	=> __( 'StarBar Values', 'starbar' ),
 				'type' 		=> 'multi_option',
 				'selectvalues' 		=> $opts
 				);
 
 			$metatab_settings = array(
 					'id' 		=> 'starbar_options',
-					'name' 		=> __( 'Starbar', 'starbars' ),
+					'name' 		=> __( 'Starbar', 'starbar' ),
 					'icon' 		=> $this->icon,
 					'clone_id'	=> $settings['clone_id'],
 					'active'	=> $settings['active']
