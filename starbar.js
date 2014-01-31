@@ -20,33 +20,41 @@
 
 			$('.starbars li:in-viewport:not(".animated")').each(function(i){
 				
-				var percent = $(this).find('.the-bar').attr('data-width')
+				var element = $(this)
+				,	percent = $(this).find('.the-bar').attr('data-width')
 	
-				$(this)
-					.addClass('animated')
+				setTimeout(
+					function(){ 
+						element
+							.addClass('animated')
 
-				$(this)
-					.find('.the-bar')
-					.animate(
-						{ 'width' : percent }
-						, 1700
-						, 'easeOutCirc'
-						,function(){}
-					)
+						element
+							.find('.the-bar')
+							.animate(
+								{ 'width' : percent }
+								, 1700
+								, 'easeOutCirc'
+								,function(){}
+							)
+
+
+
+
+						element.find('span strong').animate({
+							'opacity' : 1
+						}, 1400)
+
+						////100% progress bar
+						if(percent == '100'){
+							element.find('span strong').addClass('full')
+						}
+
+						animatedCount++
+					}
+					, (i * 350)
+				);
+	
 				
-				
-				
-
-				$(this).find('span strong').animate({
-					'opacity' : 1
-				}, 1400)
-
-				////100% progress bar
-				if(percent == '100'){
-					$(this).find('span strong').addClass('full')
-				}
-
-				animatedCount++
 
 				if(animatedCount == barCount){
 					clearInterval(barAnimation)

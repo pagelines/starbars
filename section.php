@@ -151,7 +151,7 @@ class PageLinesStarBars extends PageLinesSection {
 		//	$draw_total_tag = ($i == 1) ? sprintf('<strong>%s</strong>', $total_tag) : '';
 
 			$output .= sprintf(
-				'<li>%s<div class="bar-wrap"><span class="the-bar" data-width="%s"><strong>%s</strong></span></div></li>',
+				'<li>%s<div class="bar-wrap pl-contrast"><span class="the-bar" data-width="%s"><strong>%s</strong></span></div></li>',
 				$desc,
 				$width.'%',
 				$tag
@@ -172,19 +172,24 @@ class PageLinesStarBars extends PageLinesSection {
 
 		?>
 		<div class="starbars-wrap">
-			<h2>StarBar</h2>
 			<ul class="starbars">
 				
 				<li>
 					<p>Ninja Ability</p>
-					<div class="bar-wrap">
+					<div class="bar-wrap pl-contrast">
 						<span class="the-bar" data-width="70%"><strong>70%</strong></span>
 					</div>
 				</li>
 				<li>
 					<p>Tree Climbing Skills</p>
-					<div class="bar-wrap">
+					<div class="bar-wrap pl-contrast">
 						<span class="the-bar" data-width="90%"><strong>90%</strong></span>
+					</div>
+				</li>
+				<li>
+					<p>Surprise Attack Stealth</p>
+					<div class="bar-wrap pl-contrast">
+						<span class="the-bar" data-width="80%"><strong>80%</strong></span>
 					</div>
 				</li>
 			</ul>
@@ -229,11 +234,6 @@ class PageLinesStarBars extends PageLinesSection {
 						'default'		=> 'append',
 						'inputlabel' 	=> __( 'Starbar Format', 'pagelines' ),
 						),
-						'starbar_container_title'	=> array(
-							'type' 			=> 'text',
-							'default'		=> 'StarBar',
-							'inputlabel' 	=> __( 'StarBar Title (Optional)', 'starbar' ),
-						)
 					)
 				)
 			);
