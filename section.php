@@ -16,7 +16,7 @@ class PageLinesStarBars extends PageLinesSection {
 
 	function section_styles(){
 
-		wp_enqueue_script( 'starbar', $this->base_url.'/starbar.js', array( 'pagelines-viewport', 'pagelines-easing' ), pl_get_cache_key(), true );
+		wp_enqueue_script( 'starbar', $this->base_url.'/starbar.js', array( 'jquery' ), pl_get_cache_key(), true );
 
 	}
 

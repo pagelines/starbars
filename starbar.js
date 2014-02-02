@@ -11,54 +11,51 @@
 				barCount += $(this).find('li').length
 			})
 
-			var barAnimation = setInterval(animateStarBar, 150)
 			animateStarBar()
 
 		}
 
 		function animateStarBar(){
 
-			$('.starbars li:in-viewport:not(".animated")').each(function(i){
+			$('.starbars li:not(".animated")').each(function(i){
 				
 				var element = $(this)
 				,	percent = $(this).find('.the-bar').attr('data-width')
 	
-				setTimeout(
-					function(){ 
-						element
-							.addClass('animated')
+				element.appear(function(){
+					setTimeout(
+						function(){ 
+							element
+								.addClass('animated')
 
-						element
-							.find('.the-bar')
-							.animate(
-								{ 'width' : percent }
-								, 1700
-								, 'easeOutCirc'
-								,function(){}
-							)
+							element
+								.find('.the-bar')
+								.animate(
+									{ 'width' : percent }
+									, 1700
+									, 'easeOutCirc'
+									,function(){}
+								)
 
 
 
 
-						element.find('span strong').animate({
-							'opacity' : 1
-						}, 1400)
+							element.find('span strong').animate({
+								'opacity' : 1
+							}, 1400)
 
-						////100% progress bar
-						if(percent == '100'){
-							element.find('span strong').addClass('full')
+							////100% progress bar
+							if(percent == '100'){
+								element.find('span strong').addClass('full')
+							}
+
+							animatedCount++
 						}
-
-						animatedCount++
-					}
-					, (i * 350)
-				);
-	
+						, (i * 250)
+					);
+				})
 				
-
-				if(animatedCount == barCount){
-					clearInterval(barAnimation)
-				}
+	
 
 			});
 
