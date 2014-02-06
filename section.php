@@ -92,7 +92,7 @@ class PageLinesStarBars extends PageLinesSection {
 
 			$options[] = array(
 				'col'		=> 2,
-				'title' 	=> __( '<i class="icon-star"></i> StarBar #', 'pagelines' ) . $i,
+				'title' 	=> __( '<i class="icon icon-star"></i> StarBar #', 'pagelines' ) . $i,
 				'type' 		=> 'multi',
 				'opts' 		=> $opts,
 
