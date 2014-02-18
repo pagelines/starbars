@@ -34,7 +34,7 @@ class PageLinesStarBars extends PageLinesSection {
 					'type' 			=> 'count_select',
 					'count_start'	=> 1,
 					'count_number'	=> 12,
-					'default'		=> 4,
+					'default'		=> 3,
 					'label' 	=> __( 'Number of StarBars to Configure', 'pagelines' ),
 				),
 				array(
@@ -72,7 +72,7 @@ class PageLinesStarBars extends PageLinesSection {
 
 		);
 
-		$slides = ($this->opt('starbar_count')) ? $this->opt('starbar_count') : $this->default_limit;
+		$slides = $this->opt( 'starbar_count', array( 'default' => $this->default_limit ) );
 
 		for($i = 1; $i <= $slides; $i++){
 
@@ -195,82 +195,5 @@ class PageLinesStarBars extends PageLinesSection {
 			</ul>
 		</div>
 		<?php
-	}
-	// Deprecated, but left here because were using it for a standalone v2 version of this section.
-	function section_optionator( $settings ){
-
-		$settings = wp_parse_args( $settings, $this->optionator_default );
-
-			$array = array(
-
-				'starbar_options'	=> array(
-					'type'	=> 'multi_option',
-					'title' => 'StarBar Configuration',
-					'selectvalues'	=> array(
-
-						'starbar_count' => array(
-							'type' 			=> 'count_select',
-							'count_start'	=> 1,
-							'count_number'	=> 12,
-							'default'		=> '3',
-							'inputlabel' 	=> __( 'Number of StarBars to Configure', 'starbar' )
-						),
-						'starbar_total'	=> array(
-							'type' 			=> 'text',
-							'default'		=> 100,
-							'inputlabel' 		=> __( 'Starbar Total Count (Number)', 'starbar' )
-						),
-						'starbar_modifier'	=> array(
-							'type' 			=> 'text',
-							'default'		=> '%',
-							'inputlabel' 		=> __( 'Starbar Modifier (Text Added to Stats)', 'starbar' )
-						),
-						'starbar_format'	=> array(
-							'type' 			=> 'select',
-							'selectvalues'		=> array(
-								'append'		=> array( 'name' => 'Append Modifier (Default)' ),
-								'prepend'	 	=> array( 'name' => 'Prepend Modifier' ),
-							),
-						'default'		=> 'append',
-						'inputlabel' 	=> __( 'Starbar Format', 'pagelines' ),
-						),
-					)
-				)
-			);
-
-		global $post_ID;
-
-		$oset = array('post_id' => $post_ID, 'clone_id' => $settings['clone_id'], 'type' => $settings['type']);
-
-		$slides = (pl_setting( 'starbar_count' , $oset )) ? pl_setting( 'starbar_count' , $oset ) : $this->default_limit;
-
-		$opts = array();
-
-		for($i = 1; $i <= $slides; $i++){
-
-			$opts[ 'starbar_descriptor_' . $i ]	= array(
-					'inputlabel'		=> sprintf( __( 'Starbar #%s Description', 'starbar' ), $i ),
-					'type'		=> 'text'
-			);
-			$opts['starbar_value_' . $i ] = array(
-					'inputlabel'	=> sprintf( __( 'Starbar #%s Value', 'starbar' ), $i ),
-					'type'	=> 'text',
-
-			);
-		}
-			$array['starbars_data'] = array(
-				'title' 	=> __( 'StarBar Values', 'starbar' ),
-				'type' 		=> 'multi_option',
-				'selectvalues' 		=> $opts
-				);
-
-			$metatab_settings = array(
-					'id' 		=> 'starbar_options',
-					'name' 		=> __( 'Starbar', 'starbar' ),
-					'icon' 		=> $this->icon,
-					'clone_id'	=> $settings['clone_id'],
-					'active'	=> $settings['active']
-				);
-			register_metatab( $metatab_settings, $array );
 	}
 }
